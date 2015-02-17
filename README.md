@@ -19,6 +19,6 @@
     - [ ] Menu item appear when the user clic right clic on the image 
 
 #Contact:
-    - Blog: [nexus-coding](http://www.nexus-coding.blogspot.com)
+    - Blog: [nexus coding](nexus-coding.blogspot.com)
     - E-mail: [Chiheb Nexus](mailto://chihebnexus@gmail.com)
 
