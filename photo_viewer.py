@@ -20,6 +20,18 @@ class PhotoViewer(Gtk.Window):
 		self.set_icon_from_file("images/photo-viewer.png")
 		#self.set_decorated(0) # Remove decoration of window
 
+		# CSS Theme
+		self.set_name("Photo-Viewer")
+		style_provider = Gtk.CssProvider()
+		css = open("style.css", "rb")
+		css_data = css.read()
+		css.close()
+		style_provider.load_from_data(css_data)
+		Gtk.StyleContext.add_provider_for_screen(
+			Gdk.Screen.get_default(),
+			style_provider,
+			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
 		#Path of pictures / index picture / picture paths / zoom in/out
 		self.file_name = ""
 		self.path = []
@@ -192,9 +204,7 @@ class PhotoViewer(Gtk.Window):
 		self.label_window = Gtk.Label()
 		self.label_image_av = Gtk.Label()
 		self.label_image_ap = Gtk.Label()
-		separator = Gtk.Separator(orientation = "vertical")
 		hbox.pack_start(self.label_window, False, False, 0)
-		hbox.pack_start(separator, False, False, 10)
 		hbox.pack_end(self.label_image_av, False, False, 0)
 		hbox.pack_start(self.label_image_ap, False, False, 0)
 
@@ -449,7 +459,7 @@ class PhotoViewer(Gtk.Window):
 		about.set_logo(image)
 		about.set_authors(author)
 		about.set_license(" \
-PyGi Photo-Viewer Gui is a simple photo viwer created with PyGi  \n \
+PyGi Photo-Viewer Gui is a simple photo viewer created with PyGi  \n \
 Copyright (C) 2015  Chiheb Nexus\n \
 This program is free software: you can redistribute it and/or modify \n\
 it under the terms of the GNU General Public License as published by\n\
