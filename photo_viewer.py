@@ -40,24 +40,28 @@ class PhotoViewer(Gtk.Window):
 		self.zoom_in = 1
 
 		#Menu item
+		#widget.set_always_show_image(True) : Force widow to show image in widget
 		menu = Gtk.Menu()
 
 		menu_items_close = Gtk.ImageMenuItem("close")
-		img_icon = Gio.ThemedIcon(name="insert-image")
+		img_icon = Gio.ThemedIcon(name="application-exit")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_close.set_image(img)
+		menu_items_close.set_always_show_image(True)
 		menu_items_close.connect("activate", Gtk.main_quit)
 
 		menu_items_open = Gtk.ImageMenuItem("Open")
 		img_icon = Gio.ThemedIcon(name="insert-image")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_open.set_image(img)
+		menu_items_open.set_always_show_image(True)
 		menu_items_open.connect("activate", self.load_image)
 
 		menu.append(menu_items_open)
 		menu.append(menu_items_close)
 
-		file_menu = Gtk.MenuItem("Image")
+		file_menu = Gtk.MenuItem()
+		file_menu.set_label("Image")
 		file_menu.set_submenu(menu)
 
 		
@@ -67,42 +71,49 @@ class PhotoViewer(Gtk.Window):
 		img_icon = Gio.ThemedIcon(name="go-next")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_next.set_image(img)
+		menu_items_next.set_always_show_image(True)
 		menu_items_next.connect("activate", self.next_prev_photo, "next")
 
 		menu_items_prev = Gtk.ImageMenuItem("Previous Picture")
 		img_icon = Gio.ThemedIcon(name="go-previous")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_prev.set_image(img)
+		menu_items_prev.set_always_show_image(True)
 		menu_items_prev.connect("activate", self.next_prev_photo, "prev")
 
 		menu_items_zoom_in = Gtk.ImageMenuItem("Zoom in")
 		img_icon = Gio.ThemedIcon(name="zoom-in")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_zoom_in.set_image(img)
+		menu_items_zoom_in.set_always_show_image(True)
 		menu_items_zoom_in.connect("activate", self.zoom_in_out, "zoom-in")
 
 		menu_items_zoom_out = Gtk.ImageMenuItem("Zoom out")
 		img_icon = Gio.ThemedIcon(name="zoom-out")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_zoom_out.set_image(img)
+		menu_items_zoom_out.set_always_show_image(True)
 		menu_items_zoom_out.connect("activate", self.zoom_in_out, "zoom-out")
 
 		menu_items_zoom_original = Gtk.ImageMenuItem("Zoom Original")
 		img_icon = Gio.ThemedIcon(name="zoom-original")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_zoom_original.set_image(img)
+		menu_items_zoom_original.set_always_show_image(True)
 		menu_items_zoom_original.connect("activate", self.zoom_in_out, "zoom-original")
 
 		menu_items_rot_right = Gtk.ImageMenuItem("Rotation Right")
 		img_icon = Gio.ThemedIcon(name="object-rotate-right")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_rot_right.set_image(img)
+		menu_items_rot_right.set_always_show_image(True)
 		menu_items_rot_right.connect("activate", self.rotation, "droite")
 
 		menu_items_rot_left = Gtk.ImageMenuItem("Rotation Left")
 		img_icon = Gio.ThemedIcon(name="object-rotate-left")
 		img = Gtk.Image.new_from_gicon(img_icon, Gtk.IconSize.BUTTON)
 		menu_items_rot_left.set_image(img)
+		menu_items_rot_left.set_always_show_image(True)
 		menu_items_rot_left.connect("activate", self.rotation, "gauche")
 
 		menu.append(menu_items_next)
@@ -153,11 +164,19 @@ class PhotoViewer(Gtk.Window):
 		image_last = Gtk.Image.new_from_gicon(icon_last, Gtk.IconSize.BUTTON)
 
 		button_next = Gtk.Button()
-		button_next.add(image_next)
+		#Add text & image to Gtk.Button with HBox
+		box_image = Gtk.HBox()
+		box_image.pack_start(image_next, True, True, 0)
+		box_image.pack_start(Gtk.Label("   Next  "), True, True,0)
+		button_next.add(box_image)
 		button_next.connect("clicked", self.next_prev_photo,"next")
+
 		button_last = Gtk.Button()
 		button_last.connect("clicked", self.next_prev_photo, "prev")
-		button_last.add(image_last)
+		box_image2 = Gtk.HBox()
+		box_image2.pack_start(image_last, True, True, 0)
+		box_image2.pack_start(Gtk.Label(" Previous"), True, True, 0)
+		button_last.add(box_image2)
 
 		# Button pivoter
 		icon_piv_droite = Gio.ThemedIcon(name='object-rotate-right')
@@ -449,7 +468,7 @@ class PhotoViewer(Gtk.Window):
 		"""
 		about = Gtk.AboutDialog()
 		about.set_program_name("PyGi Photo-Viewer ")
-		about.set_version("<b>Version :</b> 0.1")
+		about.set_version("<b>Version :</b> 0.2")
 		about.set_copyright('Chiheb NeXus© - 2015')
 		about.set_comments("This program is a simple Photo Viewer created with PyGObject (PyGi)")
 		about.set_website("http://www.nexus-coding.blogspot.com")
